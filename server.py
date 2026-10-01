@@ -89,9 +89,9 @@ def get_route():
         return jsonify(route_data)
 
     except subprocess.CalledProcessError as e:
-        return jsonify({"error": "C++ Engine Failed", "details": e.stderr}), 500
+        return jsonify({"error": "C++ Engine Failed", "details": e.stderr}), 200
     except json.JSONDecodeError:
-        return jsonify({"error": "Failed to parse C++ output", "output": result.stdout}), 500
+        return jsonify({"error": "Failed to parse C++ output", "output": result.stdout}), 200
 
 @app.route('/api/nearest', methods=['POST'])
 def get_nearest():
@@ -114,7 +114,7 @@ def get_nearest():
         )
         return jsonify(json.loads(result.stdout))
     except Exception as e:
-        return jsonify({"error": "KD-Tree lookup failed"}), 500
+        return jsonify({"error": "KD-Tree lookup failed"}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
